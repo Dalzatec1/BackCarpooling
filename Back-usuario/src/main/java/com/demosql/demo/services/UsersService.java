@@ -21,9 +21,8 @@ public class UsersService {
     public User getUserById(Long userId) {
         return usersRepository.findById(userId).orElse(null);
     }
-    public User insertUser(UserDto user) {
-        User usuario = User.builder().nombre(user.getNombre()).password(user.getPassword()).build();
-        return usersRepository.save(usuario);
+    public User insertUser(User user) {
+        return usersRepository.save(user);
     }
     public void deleteUserById(Long userId) {
         usersRepository.deleteById(userId);
@@ -45,6 +44,13 @@ public class UsersService {
 
         }
 
+    }
+    public User login(String email, String password) {
+        User usuario = usersRepository.findByemail(email);
+        if (usuario.getPassword().equals(password)) {
+            return usuario;
+        }
+        return null;
     }
 
 }

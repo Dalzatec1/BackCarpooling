@@ -72,7 +72,7 @@ when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(user));
     @Test
     public void shouldInsertUser(){
         //arrange
-        UserDto userDto = new UserDto(TEST_STRING, TEST_STRING);
+
         User user = User
                 .builder()
                 .id(1L)
@@ -82,7 +82,7 @@ when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(user));
         when(repository.save(any(User.class))).thenReturn(user);
 
         //act
-        User response = service.insertUser(userDto);
+        User response = service.insertUser(user);
         //
         assertEquals(1L, response.getId());
     }

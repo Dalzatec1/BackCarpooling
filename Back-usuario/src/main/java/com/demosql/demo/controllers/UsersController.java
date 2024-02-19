@@ -31,24 +31,20 @@ public class UsersController {
             throw new WalterException("No se encontró un usuario con el ID: " + userId, null);
         }
     }
-    @PostMapping("/insert")
-    public ResponseEntity<User> createUser(@RequestBody UserDto user) {
-
+    @PostMapping("/SingUp")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = usersService.insertUser(user);
-
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        usersService.deleteUserById(userId);
-        return new ResponseEntity<>("Usuario eliminado correctamente", HttpStatus.OK);
-    }
-
-    @PutMapping("/update/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
-        User updatedUserEntity = usersService.updateUser(userId, updatedUser);
-        return new ResponseEntity<>(updatedUserEntity, HttpStatus.OK);
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User loggedInUser = usersService.login(user.getEmail() , user.getPassword());
+        if (loggedInUser != null) {
+            return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
+        } else {
+            throw new WalterException("Credenciales inválidas", null);
+        }
     }
 
 }
