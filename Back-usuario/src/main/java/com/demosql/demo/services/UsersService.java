@@ -45,6 +45,25 @@ public class UsersService {
         }
 
     }
+        public User updateUser(Long userId, User updatedUser) {
+        User existingUser = usersRepository.findById(userId).orElse(null);
+
+        if (existingUser != null) {
+            if(updatedUser.getNombre() != null){
+                existingUser.setNombre(updatedUser.getNombre());
+            }
+            if(updatedUser.getPassword() != null){
+                existingUser.setPassword(updatedUser.getPassword());
+            }
+
+            return usersRepository.save(existingUser);
+        } else {
+            throw new WalterException("No existe la Id: " + userId,null);
+
+        }
+
+    }
+
     public User login(String email, String password) {
         User usuario = usersRepository.findByemail(email);
         if (usuario.getPassword().equals(password)) {
